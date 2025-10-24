@@ -1,4 +1,30 @@
 // ---- Define your dialogs  and panels here ----
+// defining effective permissions panel
+let effective_permissions_panel = define_new_effective_permissions('effperm', true)
+$('#sidepanel').append(effective_permissions_panel)
+
+// define new user selector
+select_user_button = define_new_user_select_field('select_user', 'Set User', function(selected_user){
+    $('#effperm').attr('username', selected_user)
+    $('#effperm').attr('filepath', '/C/presentation_documents/important_file.txt')
+})
+$('#sidepanel').append(select_user_button)
+
+// information dialogue explaining permissions
+let info_dialogue = define_new_dialog('info_dialogue', title='Effective Permission Explanation')
+$('.perm_info').click(function(){
+    selected_file = path_to_file[$('#effperm').attr('filepath')]
+    selected_user = all_users[$('#effperm').attr('username')]
+    selected_permission = $(this).attr('permission_name')
+
+    let explanation = allow_user_action(selected_file, selected_user, selected_permission, explain_why = false)
+    let explanation_text = get_explanation_text(explanation)
+
+    // info_dialogue.empty()
+    // info_dialogue.append(explanation_text)
+    info_dialogue.text(explanation_text)
+    info_dialogue.dialog('open')
+})
 
 
 
